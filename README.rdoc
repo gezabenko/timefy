@@ -1,11 +1,13 @@
 == Timefy
 timefy is a redmine plugin for creating time entries from a spreadsheet file.
 
+_The base idea is Issuefy[https://github.com/tchx84/issuefy]_
+
 === Installation
-0. $cd /path/to/redmine/plugins/
-1. $git clone https://github.com/gezabenko/timefy.git
-2. $bundle install --without development test
-3. restart your webserver.
+0. +$ cd /path/to/redmine/plugins/+
+1. +$ git clone https://github.com/gezabenko/timefy.git+
+2. +$ bundle install --without development test+
+3. And restart your webserver.
 
 === Usage
 0. assign the "timefy" permission to the roles you seem fit.
@@ -23,6 +25,10 @@ check the example/book.xls for more details about the format.
 * update issues in your project, from a spreadsheet.
 * support for redmine 2.3.x and 2.4.x.
 
-=== Collaborating
-* take a look at the TODO file.
-* send a message to gezabenko or just drop a pull request, through github.
+===TODO
+[ ] support dynamic spreadsheet formats
+[ ] write tests
+[ ] date ormating
+[ ] activity
+[ ] behalf other person
+
