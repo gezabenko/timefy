@@ -40,6 +40,10 @@ class TimefyController < ApplicationController
         flash[:error] = l(:issuefy_error_wrong_format)
       rescue TimefyErrorValue => e
         flash[:error] = l(:issuefy_error_value, :value => e.message)
+      rescue TimefyErrorDate => e
+        flash[:error] = l(:issuefy_error_date, :value => e.message)
+      rescue TimefyErrorHour => e
+        flash[:error] = l(:issuefy_error_hour, :value => e.message)
       rescue Exception => e
         flash[:error] = l(:issuefy_error_something, :message => e.message)
       end

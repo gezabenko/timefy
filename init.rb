@@ -20,7 +20,7 @@ Redmine::Plugin.register :timefy do
   name 'Timefy'
   author 'Geza Benko'
   description 'Redmine plugin, for creating time entries from a spreadsheet file'
-  version '0.1.0'
+  version '0.0.3'
   url 'http://github.com/gezabenko/timefy'
   author_url 'http://github.com/gezabenko'
   permission :timefy, { :timefy => [:index, :file_upload] }

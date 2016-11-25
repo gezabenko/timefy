@@ -34,13 +34,13 @@ module Timefy
 
   def self.parse_date(cell)
     return nil if cell.nil?
-    return DateTime.strptime(cell.strip, "%d/%m/%Y") rescue raise TimefyErrorValue, cell if cell.class == String
+    return DateTime.strptime(cell.strip, "%d/%m/%Y") rescue raise TimefyErrorDate, cell if cell.class == String
     cell
   end
 
   def self.parse_hours(cell)
     return nil if cell.nil?
-    Float(cell.gsub(',','.')) rescue raise TimefyErrorValue, cell
+    Float(cell.gsub(',','.')) rescue raise TimefyErrorHour, cell
   end
 
   def self.parse_text(cell)
