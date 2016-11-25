@@ -20,6 +20,12 @@ require 'spreadsheet'
 class TimefyErrorValue < Exception
 end
 
+class TimefyErrorDate < Exception
+end
+
+class TimefyErrorHour < Exception
+end
+
 module Timefy
 
   ISSUE = 0
