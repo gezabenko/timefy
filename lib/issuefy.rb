@@ -38,38 +38,37 @@ module Timefy
     cell
   end
 
+  def self.parse_hours(cell)
+    return nil if cell.nil?
+    Float(cell.gsub(',','.')) rescue raise TimefyErrorValue, cell
+  end
+
   def self.parse_text(cell)
     return nil if cell.nil?
     cell.strip
   end
 
-    def self.parse_file(file, project, user)
+  def self.parse_file(file, project, user)
     book = Spreadsheet.open(file.path)
     sheet = book.worksheet(0)
     count = 0
 
----
-    Issue.where(:project_id => project).transaction do
+    TimeEntry.where(:project_id => project).transaction do
       sheet.each do |row|
+        # the next items MUST be presents
+        issue_id = parse_number(row[ISSUE])
+        next if issue_id.nil?
+        spent_on = parse_date(row[DATE])
+        next if spent_on.nil?
+        hours = parse_hours(row[HOUR])
+        next if hours.nil?
 
-        # subject MUST be present
-        subject = parse_text(row[SUBJECT])
-        next if subject.nil?
-
-        issue = Issue.find_by_subject(subject) || Issue.new
-
-        issue.project = project
-        issue.author = user
-        issue.subject = subject
-        issue.tracker = parse_tracker(row[TRACKER])
-        issue.assigned_to = parse_user_or_group(row[ASSIGNED])
-        issue.description = parse_text(row[DESC])
-        issue.start_date = parse_date(row[START])
-        issue.due_date = parse_date(row[DUE])
-        issue.estimated_hours = parse_number(row[ESTIMATED])
-        issue.parent_issue_id = parse_parent(row[PARENT])
-
-        issue.save!
+        time_entry = TimeEntry.new
+        time_entry.issue_id = issue_id
+        time_entry.spent_on = spent_on
+        time_entry.hours = hours
+        time_entry.parse_text(row[COMMENT])
+        time_entry.save!
 
         count += 1
       end
@@ -79,18 +78,3 @@ module Timefy
   end
 
 end
----
-module Issuefy
-  def self.parse_parent(cell)
-    return nil if cell.nil?
-    parent = Issue.find_by_id(cell) || Issue.find_by_subject(cell)
-    raise IssuefyErrorParent, cell if parent.nil?
-    parent.id
-  end
-
-  
-  
-
-  
-
-
