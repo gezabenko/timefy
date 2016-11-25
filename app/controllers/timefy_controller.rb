@@ -35,17 +35,17 @@ class TimefyController < ApplicationController
 
       begin
         count = Timefy::parse_file(file, @project, User.current)
-        return redirect_to project_issues_path(@project), :notice => l(:issuefy_notice, count)
+        return redirect_to project_issues_path(@project), :notice => l(:timefy_notice, count)
       rescue Ole::Storage::FormatError
-        flash[:error] = l(:issuefy_error_wrong_format)
+        flash[:error] = l(:timefy_error_wrong_format)
       rescue TimefyErrorValue => e
-        flash[:error] = l(:issuefy_error_value, :value => e.message)
+        flash[:error] = l(:timefy_error_value, :value => e.message)
       rescue TimefyErrorDate => e
-        flash[:error] = l(:issuefy_error_date, :value => e.message)
+        flash[:error] = l(:timefy_error_date, :value => e.message)
       rescue TimefyErrorHour => e
-        flash[:error] = l(:issuefy_error_hour, :value => e.message)
+        flash[:error] = l(:timefy_error_hour, :value => e.message)
       rescue Exception => e
-        flash[:error] = l(:issuefy_error_something, :message => e.message)
+        flash[:error] = l(:timefy_error_something, :message => e.message)
       end
     end
 
